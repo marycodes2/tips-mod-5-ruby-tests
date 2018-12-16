@@ -10,21 +10,31 @@ class RecurringMoment
 
   def match(date)
     current = @start
+    count = 0
 
-    while current < date
-      if current == date
-        return true
-      end
-
-      if @period == 'monthly'
-        current = current.advance(weeks: @interval)
-      elsif @period = 'weekly'
-        current = current.advance(months: @interval)
-      elsif @period == 'daily'
-        current = current.advance(days: @interval)
+    if @period == 'monthly'
+      while @start.advance(months: count) < date
+        count = (count + 1)
       end
     end
 
-    return false
+    if @period == "weekly" || @period == "daily"
+      while current < date
+
+        if @period == 'weekly'
+          current = current.advance(weeks: @interval)
+        elsif @period == 'daily'
+          current = current.advance(days: @interval)
+        end
+      end
+    end
+
+      if @period == 'monthly' && (count % @interval == 0)
+        current = @start.advance(months: count)
+      end
+
+    return current == date
+
   end
+
 end

@@ -113,6 +113,8 @@ describe RecurringMoment do
       end
     end
 
+    # dates = [jan1, jan10, jan31, feb1, feb28, may5, nov12, dec31]
+
     context 'monthly' do
       let(:period) { 'monthly' }
 
