@@ -12,15 +12,29 @@ class RecurringMoment
     current = @start
     count = 0
 
+    #Potential improvement:
+    # diff = date.month - @start.month
+    #
+    # if diff < 0
+    #   diff = diff + 12
+    # end
+    #
+    # if (diff) % @interval == 0
+    #   current = @start.advance(months: diff)
+    #   puts current
+    # end
+
+
     if @period == 'monthly'
       while @start.advance(months: count) < date
         count = (count + 1)
       end
-    end
+      if count % @interval == 0
+        current = @start.advance(months: count)
+      end
 
-    if @period == "weekly" || @period == "daily"
+    elsif @period == "weekly" || @period == "daily"
       while current < date
-
         if @period == 'weekly'
           current = current.advance(weeks: @interval)
         elsif @period == 'daily'
@@ -28,10 +42,6 @@ class RecurringMoment
         end
       end
     end
-
-      if @period == 'monthly' && (count % @interval == 0)
-        current = @start.advance(months: count)
-      end
 
     return current == date
 
